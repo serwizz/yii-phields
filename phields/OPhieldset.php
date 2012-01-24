@@ -1,41 +1,42 @@
 <?php
 
 /**
- * OPhieldset 
- * 
+ * OPhieldset
+ *
  * @uses CComponent
- * @package 
+ * @package
  * @version $id$
  * @copyright Tako Neko
- * @author Tako Neko <oct8cat@gmail.com> 
+ * @author Tako Neko <oct8cat@gmail.com>
  * @license GNU GPL v3.0 {@link http://www.gnu.org/copyleft/gpl.html}
  */
 class OPhieldset extends CComponent {
 
-    /*owner {{{*/
-    /**
-     * owner 
-     * 
-     * @var mixed
-     * @access public
-     */
-    public $owner = null;
-    /*}}}*/
-
     /*defaultFieldClass {{{*/
     /**
-     * defaultFieldClass 
-     * 
+     * Class name for the fieldsets' fields with no class name given directly.
+     *
      * @var string
      * @access public
      */
     public $defaultFieldClass = 'Text';
     /*}}}*/
 
+    /*fields {{{*/
+    /**
+     * The fieldset's fields.
+     *
+     * @var array
+     * @access public
+     */
+    public $fields = array(
+    );
+    /*}}}*/
+
     /*htmlOptions {{{*/
     /**
-     * htmlOptions 
-     * 
+     * HTML options of the fieldset.
+     *
      * @var array
      * @access public
      */
@@ -44,21 +45,130 @@ class OPhieldset extends CComponent {
     );
     /*}}}*/
 
-    /*fields {{{*/
+    /*owner {{{*/
     /**
-     * fields 
-     * 
-     * @var array
+     * Instance of the fieldset's owner.
+     *
+     * @var mixed
      * @access public
      */
-    public $fields = array(
-    );
+    public $owner = null;
+    /*}}}*/
+
+
+    /*__construct {{{*/
+    /**
+     * The fieldset's constructor.
+     *
+     * @param mixed $owner
+     * @access public
+     * @return void
+     */
+    public function __construct($owner) {
+        $this->owner = $owner;
+    }
+    /*}}}*/
+
+    /*begin {{{*/
+    /**
+     * Opens the fieldset container.
+     *
+     * @access public
+     * @return void
+     */
+    public function begin() {
+        echo CHtml::openTag('div', $this->htmlOptions);
+    }
+    /*}}}*/
+
+    /*createField {{{*/
+    /**
+     * Creates a field with the given options.
+     *
+     * @param mixed $options
+     * @access public
+     * @return void
+     */
+    public function createField($options) {
+        $class = 'O'.$options['class'].'Field';
+        $field = new $class($this);
+        foreach ($options as $k=>$v) {
+            $field->$k = $v;
+        }
+        $field->init();
+        return $field;
+
+    }
+    /*}}}*/
+
+    /*end {{{*/
+    /**
+     * Closes the fieldset's container.
+     *
+     * @access public
+     * @return void
+     */
+    public function end() {
+        echo CHtml::closeTag('div');
+    }
+    /*}}}*/
+
+    /*field {{{*/
+    /**
+     * Creates and renders the fieldset's field with given options.
+     *
+     * @param mixed $options
+     * @access public
+     * @return void
+     */
+    public function field($options) {
+        $field = $this->createField($options);
+        $field->run();
+    }
+    /*}}}*/
+
+    /*fields {{{*/
+    /**
+     * Renders all of the fieldset's fields.
+     *
+     * @access public
+     * @return void
+     */
+    public function fields() {
+        foreach ($this->fields as $k=>$v) {
+            $this->field($v);
+        }
+    }
+    /*}}}*/
+
+    /*getForm {{{*/
+    /**
+     * Returns the fieldset's owner's CActiveForm widget instance.
+     *
+     * @access public
+     * @return void
+     */
+    public function getForm() {
+        return $this->owner->form;
+    }
+    /*}}}*/
+
+    /*getModel {{{*/
+    /**
+     * Returns the fieldset's owner's model instance.
+     *
+     * @access public
+     * @return void
+     */
+    public function getModel() {
+        return $this->owner->model;
+    }
     /*}}}*/
 
     /*init {{{*/
     /**
-     * init 
-     * 
+     * Initiates the fieldset.
+     *
      * @access public
      * @return void
      */
@@ -78,8 +188,8 @@ class OPhieldset extends CComponent {
 
     /*run {{{*/
     /**
-     * run 
-     * 
+     * Runs the fieldset.
+     *
      * @access public
      * @return void
      */
@@ -87,115 +197,6 @@ class OPhieldset extends CComponent {
         $this->begin();
         $this->fields();
         $this->end();
-    }
-    /*}}}*/
-
-    /*begin {{{*/
-    /**
-     * begin 
-     * 
-     * @access public
-     * @return void
-     */
-    public function begin() {
-        echo CHtml::openTag('div', $this->htmlOptions);
-    }
-    /*}}}*/
-
-    /*end {{{*/
-    /**
-     * end 
-     * 
-     * @access public
-     * @return void
-     */
-    public function end() {
-        echo CHtml::closeTag('div');
-    }
-    /*}}}*/
-
-    /*fields {{{*/
-    /**
-     * fields 
-     * 
-     * @access public
-     * @return void
-     */
-    public function fields() {
-        foreach ($this->fields as $k=>$v) {
-            $this->field($v);
-        }
-    }
-    /*}}}*/
-
-    /*field {{{*/
-    /**
-     * field 
-     * 
-     * @param mixed $options 
-     * @access public
-     * @return void
-     */
-    public function field($options) {
-        $field = $this->createField($options);
-        $field->run();
-    }
-    /*}}}*/
-
-    /*createField {{{*/
-    /**
-     * createField 
-     * 
-     * @param mixed $options 
-     * @access public
-     * @return void
-     */
-    public function createField($options) {
-        $class = 'O'.$options['class'].'Field';
-        $field = new $class($this);
-        foreach ($options as $k=>$v) {
-            $field->$k = $v;
-        }
-        $field->init();
-        return $field;
-
-    }
-    /*}}}*/
-
-    /*getForm {{{*/
-    /**
-     * getForm 
-     * 
-     * @access public
-     * @return void
-     */
-    public function getForm() {
-        return $this->owner->form;
-    }
-    /*}}}*/
-
-    /*__construct {{{*/
-    /**
-     * __construct 
-     * 
-     * @param mixed $owner 
-     * @access public
-     * @return void
-     */
-    public function __construct($owner) {
-        $this->owner = $owner;
-    }
-    /*}}}*/
-
-    /*getModel {{{*/
-    /**
-     * getModel 
-     * 
-     * @access public
-     * @return void
-     */
-    public function getModel() {
-        return $this->owner->model;
     }
     /*}}}*/
 

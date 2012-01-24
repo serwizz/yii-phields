@@ -1,67 +1,23 @@
 <?php
 
 /**
- * OField 
- * 
+ * OField
+ *
  * @uses CComponent
  * @uses IField
  * @abstract
- * @package 
+ * @package
  * @version $id$
  * @copyright Tako Neko
- * @author Tako Neko <oct8cat@gmail.com> 
+ * @author Tako Neko <oct8cat@gmail.com>
  * @license GNU GPL v3.0 {@link http://www.gnu.org/copyleft/gpl.html}
  */
 abstract class OField extends CComponent implements IField {
 
-    /*labelHtmlOptions {{{*/
-    /**
-     * labelHtmlOptions 
-     * 
-     * @var array
-     * @access public
-     */
-    public $labelHtmlOptions = array(
-    );
-    /*}}}*/
-
-    /*htmlOptions {{{*/
-    /**
-     * htmlOptions 
-     * 
-     * @var array
-     * @access public
-     */
-    public $htmlOptions = array(
-    );
-    /*}}}*/
-
-    /*owner {{{*/
-    /**
-     * owner 
-     * 
-     * @var mixed
-     * @access public
-     */
-    public $owner = null;
-    /*}}}*/
-
-    /*rowHtmlOptions {{{*/
-    /**
-     * rowHtmlOptions 
-     * 
-     * @var array
-     * @access public
-     */
-    public $rowHtmlOptions = array(
-        'class'=>'row',
-    );
-    /*}}}*/
-
     /*attribute {{{*/
     /**
-     * attribute 
-     * 
+     * The field's attribute name.
+     *
      * @var string
      * @access public
      */
@@ -70,45 +26,76 @@ abstract class OField extends CComponent implements IField {
 
     /*class {{{*/
     /**
-     * class 
-     * 
+     * The field's class name.
+     *
      * @var string
      * @access public
      */
     public $class = '';
     /*}}}*/
 
-    /*init {{{*/
+    /*htmlOptions {{{*/
     /**
-     * init 
-     * 
+     * HTML options of the field's elemen.
+     *
+     * @var array
      * @access public
-     * @return void
      */
-    public function init() {
-    }
+    public $htmlOptions = array(
+    );
     /*}}}*/
 
-    /*run {{{*/
+    /*labelHtmlOptions {{{*/
     /**
-     * run 
-     * 
+     * HTML options of the field's label.
+     *
+     * @var array
+     * @access public
+     */
+    public $labelHtmlOptions = array(
+    );
+    /*}}}*/
+
+    /*owner {{{*/
+    /**
+     * The field's owner instance.
+     *
+     * @var mixed
+     * @access public
+     */
+    public $owner = null;
+    /*}}}*/
+
+    /*rowHtmlOptions {{{*/
+    /**
+     * HTML options of the field's container.
+     *
+     * @var array
+     * @access public
+     */
+    public $rowHtmlOptions = array(
+        'class'=>'row',
+    );
+    /*}}}*/
+
+
+    /*__construct {{{*/
+    /**
+     * The field's constructor.
+     *
+     * @param mixed $owner
      * @access public
      * @return void
      */
-    public function run() {
-        $this->begin();
-        $this->label();
-        $this->element();
-        $this->error();
-        $this->end();
+    public function __construct($owner) {
+        $this->owner = $owner;
     }
     /*}}}*/
 
     /*begin {{{*/
     /**
-     * begin 
-     * 
+     * Opens the field's container.
+     *
      * @access public
      * @return void
      */
@@ -119,8 +106,8 @@ abstract class OField extends CComponent implements IField {
 
     /*end {{{*/
     /**
-     * end 
-     * 
+     * Closes the field's container.
+     *
      * @access public
      * @return void
      */
@@ -129,10 +116,57 @@ abstract class OField extends CComponent implements IField {
     }
     /*}}}*/
 
+    /*error {{{*/
+    /**
+     * Renders the field's validation error (if any).
+     *
+     * @access public
+     * @return void
+     */
+    public function error() {
+        echo $this->form->error($this->model, $this->attribute);
+    }
+    /*}}}*/
+
+    /*getForm {{{*/
+    /**
+     * Return the field's owner CActiveForm instance.
+     *
+     * @access public
+     * @return void
+     */
+    public function getForm() {
+        return $this->owner->form;
+    }
+    /*}}}*/
+
+    /*getModel {{{*/
+    /**
+     * Returns the field's owner model instance.
+     *
+     * @access public
+     * @return void
+     */
+    public function getModel() {
+        return $this->owner->model;
+    }
+    /*}}}*/
+
+    /*init {{{*/
+    /**
+     * Initiates the field.
+     *
+     * @access public
+     * @return void
+     */
+    public function init() {
+    }
+    /*}}}*/
+
     /*label {{{*/
     /**
-     * label 
-     * 
+     * Renders the field's label.
+     *
      * @access public
      * @return void
      */
@@ -142,52 +176,19 @@ abstract class OField extends CComponent implements IField {
     }
     /*}}}*/
 
-    /*getForm {{{*/
+    /*run {{{*/
     /**
-     * getForm 
-     * 
+     * Runs the field.
+     *
      * @access public
      * @return void
      */
-    public function getForm() {
-        return $this->owner->form;
-    }
-    /*}}}*/
-
-    /*__construct {{{*/
-    /**
-     * __construct 
-     * 
-     * @param mixed $owner 
-     * @access public
-     * @return void
-     */
-    public function __construct($owner) {
-        $this->owner = $owner;
-    }
-    /*}}}*/
-
-    /*getModel {{{*/
-    /**
-     * getModel 
-     * 
-     * @access public
-     * @return void
-     */
-    public function getModel() {
-        return $this->owner->model;
-    }
-    /*}}}*/
-
-    /*error {{{*/
-    /**
-     * error 
-     * 
-     * @access public
-     * @return void
-     */
-    public function error() {
-        echo $this->form->error($this->model, $this->attribute);
+    public function run() {
+        $this->begin();
+        $this->label();
+        $this->element();
+        $this->error();
+        $this->end();
     }
     /*}}}*/
 
