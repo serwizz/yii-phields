@@ -9,10 +9,8 @@ Put the ***phields*** directory into your extensions folder.
 There is no runnable parts, so you just need to add this wrappers in your import
 path, i.e. in application's configuration file.
 
-```PHP
+```php
 'import'=>array(
-    . . . . . .
     'application.extensions.phields.*',
-    . . . . . .
 ),
 ```
