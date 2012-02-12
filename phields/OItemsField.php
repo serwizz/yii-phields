@@ -24,4 +24,24 @@ abstract class OItemsField extends OField {
     );
     /*}}}*/
 
+    /*init {{{*/
+    /**
+     * init 
+     * 
+     * @access public
+     * @return void
+     */
+    public function init() {
+        if (empty($this->items)) {
+            /*propzHolder {{{*/
+            if (in_array('OPropzHolderBehavior', array_values($this->model->behaviors()))) {
+                $this->items = CHtml::listData($this->model->getPropzItems($this->attribute),
+                        'position', 'value');
+            }
+            /*}}}*/
+        }
+        return parent::init();
+    }
+    /*}}}*/
+
 }

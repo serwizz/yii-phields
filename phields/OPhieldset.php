@@ -179,6 +179,14 @@ class OPhieldset extends CComponent {
                     'attribute'=>$v,
                 );
             }
+            /*propzHolder {{{*/
+            if (in_array('OPropzHolderBehavior', array_values($this->model->behaviors()))) {
+                try {
+                    $this->fields[$k]['class'] = $this->model->getPropzType($this->fields[$k]['attribute']);
+                } catch (OPropzHelperException $ex) {
+                }
+            }
+            /*}}}*/
             if (empty($this->fields[$k]['class'])) {
                 $this->fields[$k]['class'] = $this->defaultFieldClass;
             }
