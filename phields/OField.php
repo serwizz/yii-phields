@@ -34,6 +34,27 @@ abstract class OField extends CComponent implements IField {
     public $class = '';
     /*}}}*/
 
+    /*decorate {{{*/
+    /**
+     * decorate 
+     * 
+     * @var mixed
+     * @access public
+     */
+    public $decorate = true;
+    /*}}}*/
+
+    /*headerHtmlOptions {{{*/
+    /**
+     * headerHtmlOptions 
+     * 
+     * @var array
+     * @access public
+     */
+    public $headerHtmlOptions = array(
+    );
+    /*}}}*/
+
     /*htmlOptions {{{*/
     /**
      * HTML options of the field's elemen.
@@ -184,11 +205,15 @@ abstract class OField extends CComponent implements IField {
      * @return void
      */
     public function run() {
-        $this->begin();
-        $this->label();
-        $this->element();
-        $this->error();
-        $this->end();
+        if ($this->decorate) {
+            $this->begin();
+            $this->label();
+            $this->element();
+            $this->error();
+            $this->end();
+        } else {
+            $this->element();
+        }
     }
     /*}}}*/
 
