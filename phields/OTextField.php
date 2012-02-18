@@ -20,7 +20,10 @@ class OTextField extends OField {
      * @return void
      */
     public function element() {
-        echo $this->form->textField($this->model, $this->attribute,
+        $type = (strstr($this->attribute, 'password'))
+            ? 'passwordField'
+            : 'textField';
+        echo $this->form->$type($this->model, $this->attribute,
                 $this->htmlOptions);
     }
     /*}}}*/
