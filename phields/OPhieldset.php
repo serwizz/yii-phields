@@ -179,17 +179,22 @@ class OPhieldset extends CComponent {
                     'attribute'=>$v,
                 );
             }
-            /*propzHolder {{{*/
-            if (in_array('OPropzHolderBehavior', array_values($this->model->behaviors()))) {
-                try {
-                    $this->fields[$k]['class'] = $this->model->getPropzType($this->fields[$k]['attribute']);
-                } catch (OPropzHelperException $ex) {
+            /*class {{{*/
+            if (empty($this->fields[$k]['class'])) {
+                $attribute = $this->fields[$k]['attribute'];
+                $behaviors = array_values($this->model->behaviors());
+                if (in_array('OPropzHolderBehavior', $behaviors)) { 
+                    try {
+                        $class = $this->model->getPropzType($attribute);
+                    } catch (Exception $ex) {
+                        $class = $this->defaultFieldClass;
+                    }
                 }
+                $this->fields[$k]['class'] = (!empty($class))
+                    ? $class
+                    : $this->defaultFieldClass;
             }
             /*}}}*/
-            if (empty($this->fields[$k]['class'])) {
-                $this->fields[$k]['class'] = $this->defaultFieldClass;
-            }
         }
     }
     /*}}}*/
