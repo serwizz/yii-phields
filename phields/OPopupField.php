@@ -18,6 +18,7 @@ class OPopupField extends OField {
      * @return void
      */
     public function element() {
+        
         echo CHtml::ajaxLink('выбрать метро',
                                     Yii::app()->createUrl('metro/map', array('cityId'=>'77')),
                                     array(
@@ -39,6 +40,9 @@ class OPopupField extends OField {
                                     ),
                                     array('class'=>'pseudo')
         );
+        echo CHtml::openTag('div', array('id'=>'metro_choose'));
+        echo CHtml::closeTag('div');
+        
     }
     /*}}}*/
 
