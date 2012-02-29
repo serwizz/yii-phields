@@ -24,7 +24,6 @@ class OPopupField extends OField {
                 'type'=>'POST',
                 'success'=>'function(data,status){
                     $("#metro_popup").html(data);
-                    $("#metro_popup").center();
                     var ids = [];
                     if($("#metro_choose").html() != ""){
                         $("#metro_choose").find("div").each(function(i){
@@ -32,10 +31,8 @@ class OPopupField extends OField {
                         });
                         $("#stantions .st_list").html($("#metro_choose").html());
                     }
-                    //$("#metro_popup .m").bind("click", $("metro_popup .m").selectStantion);
                     $("#metro_popup .m").click(function(){$(this).selectStantion("'.get_class($this->model).'")});
-                    $("#metro_popup").showBlack();
-                    $("#metro_popup").fadeIn();
+                    showPopup();
                 }'
             ),
             array('class'=>'pseudo')
