@@ -66,6 +66,16 @@ abstract class OField extends CComponent implements IField {
     );
     /*}}}*/
 
+    /*label {{{*/
+    /**
+     * label 
+     * 
+     * @var string
+     * @access public
+     */
+    public $label = '';
+    /*}}}*/
+
     /*labelHtmlOptions {{{*/
     /**
      * HTML options of the field's label.
@@ -192,8 +202,12 @@ abstract class OField extends CComponent implements IField {
      * @return void
      */
     public function label() {
-        echo $this->form->labelEx($this->model, $this->attribute,
+        if (!empty($this->label)) {
+            echo CHtml::label($this->label, get_class($this).'_'.$this->attribute);            
+        } else {
+            echo $this->form->labelEx($this->model, $this->attribute,
                 $this->labelHtmlOptions);
+        }
     }
     /*}}}*/
 
