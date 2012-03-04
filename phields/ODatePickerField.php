@@ -12,10 +12,15 @@
  */
 class ODatePickerField extends OJuiField {
 
+    public $options = array(
+        'dateFormat'=>'dd/mm/yy',
+    );
+
     public function element() {
         $this->form->widget('zii.widgets.jui.CJuiDatePicker', array(
             'model'=>$this->model,
             'attribute'=>$this->attribute,
+            'options'=>$this->options,
         ));
     }
 }
