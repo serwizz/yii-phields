@@ -24,6 +24,16 @@ abstract class OField extends CComponent implements IField {
     public $attribute = '';
     /*}}}*/
 
+    /*captionAfter {{{*/
+    /**
+     * captionAfter
+     *
+     * @var string
+     * @access public
+     */
+    public $captionAfter = '';
+    /*}}}*/
+
     /*class {{{*/
     /**
      * The field's class name.
@@ -36,8 +46,8 @@ abstract class OField extends CComponent implements IField {
 
     /*decorate {{{*/
     /**
-     * decorate 
-     * 
+     * decorate
+     *
      * @var mixed
      * @access public
      */
@@ -46,8 +56,8 @@ abstract class OField extends CComponent implements IField {
 
     /*headerHtmlOptions {{{*/
     /**
-     * headerHtmlOptions 
-     * 
+     * headerHtmlOptions
+     *
      * @var array
      * @access public
      */
@@ -68,8 +78,8 @@ abstract class OField extends CComponent implements IField {
 
     /*label {{{*/
     /**
-     * label 
-     * 
+     * label
+     *
      * @var string
      * @access public
      */
@@ -135,6 +145,19 @@ abstract class OField extends CComponent implements IField {
     }
     /*}}}*/
 
+    /*_captionAfter {{{*/
+    /**
+     * _captionAfter
+     *
+     * @access protected
+     * @return void
+     */
+    protected function _captionAfter() {
+        echo CHtml::tag('span', array('class'=>'caption after'),
+                $this->captionAfter, true);
+    }
+    /*}}}*/
+
     /*end {{{*/
     /**
      * Closes the field's container.
@@ -191,6 +214,13 @@ abstract class OField extends CComponent implements IField {
      * @return void
      */
     public function init() {
+        /*rowHtmlOptions {{{*/
+        $class = (!empty($this->rowHtmlOptions['class']))
+            ? $this->rowHtmlOptions['class']
+            : 'row';
+        $class .= ' '.$this->class;
+        $this->rowHtmlOptions['class'] = $class;
+        /*}}}*/
     }
     /*}}}*/
 
@@ -203,7 +233,7 @@ abstract class OField extends CComponent implements IField {
      */
     public function label() {
         if (!empty($this->label)) {
-            echo CHtml::label($this->label, get_class($this).'_'.$this->attribute);            
+            echo CHtml::label($this->label, get_class($this).'_'.$this->attribute);
         } else {
             echo $this->form->labelEx($this->model, $this->attribute,
                 $this->labelHtmlOptions);
@@ -223,6 +253,11 @@ abstract class OField extends CComponent implements IField {
             $this->begin();
             $this->label();
             $this->element();
+            /*captionAfter {{{*/
+            if ($this->captionAfter != '') {
+                $this->_captionAfter();
+            }
+            /*}}}*/
             $this->error();
             $this->end();
         } else {
