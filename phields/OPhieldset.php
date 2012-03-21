@@ -55,6 +55,16 @@ class OPhieldset extends CComponent {
     public $owner = null;
     /*}}}*/
 
+    /*separator {{{*/
+    /**
+     * separator 
+     * 
+     * @var string
+     * @access public
+     */
+    public $separator = "\n";
+    /*}}}*/
+
 
     /*__construct {{{*/
     /**
@@ -78,6 +88,7 @@ class OPhieldset extends CComponent {
      */
     public function begin() {
         echo CHtml::openTag('div', $this->htmlOptions);
+        echo $this->separator;
     }
     /*}}}*/
 
@@ -110,6 +121,7 @@ class OPhieldset extends CComponent {
      */
     public function end() {
         echo CHtml::closeTag('div');
+        echo $this->separator;
     }
     /*}}}*/
 
