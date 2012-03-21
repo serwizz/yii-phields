@@ -119,6 +119,16 @@ abstract class OField extends CComponent implements IField {
     );
     /*}}}*/
 
+    /*separator {{{*/
+    /**
+     * separator 
+     * 
+     * @var string
+     * @access public
+     */
+    public $separator = "\n";
+    /*}}}*/
+
 
     /*__construct {{{*/
     /**
@@ -142,6 +152,7 @@ abstract class OField extends CComponent implements IField {
      */
     public function begin() {
         echo CHtml::openTag('div', $this->rowHtmlOptions);
+        echo $this->separator;
     }
     /*}}}*/
 
@@ -167,6 +178,7 @@ abstract class OField extends CComponent implements IField {
      */
     public function end() {
         echo CHtml::closeTag('div');
+        echo $this->separator;
     }
     /*}}}*/
 
