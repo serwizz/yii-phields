@@ -56,6 +56,7 @@ class OAutoCompleteField extends OJuiField {
             'attribute'=>$this->attribute,
             'source'=>$this->source,
             'options'=>$this->options,
+            'htmlOptions'=>$this->htmlOptions,
         ));
         echo $this->form->hiddenField($this->model, $this->attribute.$this->fieldSuffix);
     }
